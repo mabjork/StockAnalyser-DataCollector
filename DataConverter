@@ -1,0 +1,4 @@
+class DataConverter(object):
+
+    def convert(self):
+        print "lols"
