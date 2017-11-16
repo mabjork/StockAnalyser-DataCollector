@@ -6,6 +6,7 @@ from Equity import Equity
 from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.sectorperformance import SectorPerformances
 from DatabaseController import DatabaseController
+from Currency import Currency
 class AlphaVantage(object):
 
     def __init__(self, key):
@@ -36,10 +37,25 @@ class AlphaVantage(object):
             data["stock_id"] = equity.stock_id
             datalist.append(data)
             controller.saveToDB(datalist)
-
+        for pc in self.physicalcurrencies:
+            datalist = []
+            data = {}
+            data["name"] = pc.name
+            data["symbol"] = pc.symbol
+            data["id"] = pc.currency_id
+            datalist.append(data)
+            controller.savePCurrencyToDB(datalist)
+        for pc in self.digitalcurrencies:
+            datalist = []
+            data = {}
+            data["name"] = pc.name
+            data["symbol"] = pc.symbol
+            data["id"] = pc.currency_id
+            datalist.append(data)
+            controller.saveDCurrencyToDB(datalist)
 
     def getSymbols(self):
-        counter = 2
+        counter = 1
         equities = []
         files = glob.glob("./Companies/*.csv")
         for fileName in files:
@@ -54,4 +70,29 @@ class AlphaVantage(object):
                     equity = Equity(counter,parts[1],parts[0],parts[6],parts[7])
                     equities.append(equity)
                     counter += 1
+
+
+        physicalCounter = 1
+        pcurrenciesList = []
+        with open("./Currencies/physical_currency_list.csv") as f:
+            content = f.readlines()
+            for line in content:
+                parts = line.split(",")
+                currency = Currency(physicalCounter,parts[0],parts[1],"Physical")
+                pcurrenciesList.append(currency)
+                physicalCounter += 1
+
+
+        digitalCounter = 1
+        dcurrenciesList = []
+        with open("./Currencies/digital_currency_list.csv") as f:
+            content = f.readlines()
+            for line in content:
+                parts = line.split(",")
+                currency = Currency(digitalCounter,parts[0],parts[1],"Digital")
+                dcurrenciesList.append(currency)
+                digitalCounter += 1
+
+        self.physicalcurrencies = pcurrenciesList
+        self.digitalcurrencies = dcurrenciesList
         self.equities = equities
