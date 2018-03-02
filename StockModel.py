@@ -10,10 +10,15 @@ class StockModelController:
     def __init__(self):
         self.data_set = []
     
-    def createDataSet(self,data_collection,format):
+    def createDataSetFromResponse(self,data_collection,format):
         if(format == "json"):
             data = json.loads(data_collection)
             self.data_set = json_normalize(data)
+            return self.data_set
+
+    def createDataSetFromFile(self,filename):
+        dataframe = pd.read_csv(filename)
+        return dataframe
     
     def analyseData(self):
         None
@@ -25,5 +30,11 @@ class StockModelController:
         None
 
     
-            
+    def kmeans(self):
+        None
+
+    def svm():
+        None
+
+
 
