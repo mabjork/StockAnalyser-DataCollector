@@ -21,6 +21,7 @@ class DatabaseController(object):
             self.connection.commit()
         else:
             print "Id already exists"
+
     def savePCurrencyToDB(self,data):
         if not(self.connected):
             print "Not connected to database"
@@ -31,6 +32,7 @@ class DatabaseController(object):
             self.connection.commit()
         else:
             print "Id already exists"
+
     def saveDCurrencyToDB(self,data):
         if not(self.connected):
             print "Not connected to database"
@@ -41,7 +43,6 @@ class DatabaseController(object):
             self.connection.commit()
         else:
             print "Id already exists"
-
 
     def checkIfIdExists(self,table,entity_id):
         data = []

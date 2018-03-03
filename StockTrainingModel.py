@@ -3,9 +3,9 @@ import numpy
 import json
 from pandas.io.json import json_normalize
 import pandas as pd
-import tensorflow
+#import tensorflow
 
-class StockModelController:
+class StockTrainingModelController:
 
     def __init__(self):
         self.data_set = []
@@ -28,7 +28,6 @@ class StockModelController:
 
     def createSentimentModel():
         None
-
     
     def kmeans(self):
         None

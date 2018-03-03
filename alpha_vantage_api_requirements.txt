@@ -1,0 +1,2 @@
+function;symbol;datatype;interval;outputsize;apikey;from_currency;to_currency;market;time_period;serial_type;fastlimit;slowlimit;signalperiod;fastmatype;slowmatype;signalmatype;fastkperiod;fastdperiod;fastdmatype;matype;timeperiod1;timeperiod2;timeperiod3;nbdevup;nbdevdn;
+TIME_SERIES_INTRADAY;required;optional;required;optional;required;none;none;none;none;none;none;none;none;none;none;none;none,none,none,none,none,none,none,none,none
