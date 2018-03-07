@@ -1,9 +1,11 @@
-import pandas
-import numpy
+import numpy as np
 import json
 from pandas.io.json import json_normalize
 import pandas as pd
-#import tensorflow
+import scipy
+import sklearn
+from sklearn.cluster import KMeans
+from sklearn.metrics import pairwise_distances
 
 class StockTrainingModelController:
 
@@ -15,6 +17,9 @@ class StockTrainingModelController:
             data = json.loads(data_collection)
             self.data_set = json_normalize(data)
             return self.data_set
+        
+    def loadDataSet(self):
+        None
 
     def createDataSetFromFile(self,filename):
         dataframe = pd.read_csv(filename)
@@ -23,16 +28,43 @@ class StockTrainingModelController:
     def analyseData(self):
         None
 
-    def createTensorFlowModel():
+    def createTensorFlowModel(self):
         None
 
-    def createSentimentModel():
+    def createSentimentModel(self):
         None
     
-    def kmeans(self):
-        None
+    def kmeans(self,datapoints,k,maxiter,seed = None):
+        if(seed != None):
+            np.random.seed(seed)
+        
+        rand_indices = np.random.randint(len(datapoints),size=k)
+        centroids = np.array(datapoints[rand_indices])
 
-    def svm():
+        centroids_histroy = []
+
+        for itr in range(maxiter):
+            ### Assignment step ###
+            distance_matrix = pairwise_distances(datapoints,centroids,metric='sqeuclidian')
+
+            cluster_assignment = np.argmin(distance_matrix,axis=1)
+            ### Update step ###
+            new_centroids = np.empty([k,2])
+
+            for i in range(k):
+                new_centroids[i] = (np.mean(datapoints[cluster_assignment == i],axis=0))
+
+            ### Stop condition ###
+            if(np.array_equal(centroids,new_centroids)):
+                break
+            
+            centroids = new_centroids
+        
+        return centroids,cluster_assignment
+
+
+
+    def svm(self):
         None
 
 

@@ -8,12 +8,12 @@ class DatabaseController(object):
                 self.connection = psycopg2.connect("dbname='testdb' user='postgres' host='localhost' password='1234'")
                 self.connected = True
         except:
-                print "I am unable to connect to the database"
+                print("I am unable to connect to the database")
                 self.connected = False
 
     def saveToDB(self,data):
         if not(self.connected):
-            print "Not connected to database"
+            print("Not connected to database")
             return
         if not(self.checkIfIdExists("stock",data[0]["stock_id"])):
             cur = self.connection.cursor()
@@ -49,6 +49,10 @@ class DatabaseController(object):
         data.append(entity_id)
         cur = self.connection.cursor()
         cur.execute("""SELECT * from """ +table+""" where id = %s""",data)
+        
         for item in cur:
             return True
+
         return False
+    
+    

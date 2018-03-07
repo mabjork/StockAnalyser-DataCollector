@@ -2,8 +2,6 @@ import requests
 from os import listdir
 from os.path import isfile, join
 import glob
-from alpha_vantage.timeseries import TimeSeries
-from alpha_vantage.sectorperformance import SectorPerformances
 import json
 
 class AlphaVantageController(object):
@@ -19,6 +17,7 @@ class AlphaVantageController(object):
         response = requests.get(endpoint)
         data = json.loads(response.text)
         return data
+    
     def makeApiRequest(self,function,options):
         factory = self.endpointfactory
         endpoint = factory.makeEndpoint(function,options)
@@ -26,8 +25,9 @@ class AlphaVantageController(object):
         data = json.loads(response.text)
         return data
 
-    def makeCryptoRequest(self):
+    def makeCryptoRequest(self,symbol,fiat):
         None
+
 
     def readSymbolsFromFile(self,filename,clean_method = lambda x : x, column = 0, separator = ",", startline = 0):
         if(filename == None or filename == ""):
@@ -101,17 +101,13 @@ class AlphaVantageEndpointFactory(object):
             url += "&"
             url += option + "=" + param
 
-        print url
         return url
-
-
 
     def readRequirements(self):
         requirements = {}
 
         with open(self.requirements_file) as f:
             content = f.readlines()
-        print(content)
         params = content[0].split(";")
         for i in range(1, len(content)):
             line = content[i]
@@ -127,5 +123,23 @@ class AlphaVantageEndpointFactory(object):
             requirements[function_name] = options_dict
 
         return requirements
+
+    def readSettings(self):
+        settings = {}
+
+        with open("alpha_vantage_setting.txt") as f:
+            content = f.readlines()
+
+        for line in content:
+            setting = line.split("=")
+            variable = setting[0]
+            value = setting[1]
+            settings[variable] = value
+
+        return settings
+    
+    def parseSettings(self):
+
+        None
 
 
