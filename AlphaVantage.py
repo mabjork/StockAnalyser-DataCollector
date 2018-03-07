@@ -60,7 +60,7 @@ class AlphaVantageController(object):
 
 
 class AlphaVantageEndpointFactory(object):
-    base = "https://www.alphavantage.co/query?"
+    base_url = "https://www.alphavantage.co/query?"
     intervals = ["1min","5min","15min","30min","60min"]
     outputsizes = ["compact","full"]
     outputsize_default = "compact"
@@ -88,7 +88,7 @@ class AlphaVantageEndpointFactory(object):
             if(option not in keys):
                 raise ValueError("Not all required fields are present. Missing " + option)
         
-        url = self.base
+        url = self.base_url
 
         #Check if the options provided are supported
         for key in keys:

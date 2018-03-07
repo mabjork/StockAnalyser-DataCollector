@@ -13,7 +13,9 @@ def main():
     twitterController = TwitterController()
 
     files = getCompaniesFiles()
-    symbols = alphaVantageController.readSymbolsFromMultipleFiles(files,lambda x : x.replace('"',"").strip(),startline = 1)
+
+    clean_function = lambda x : x.replace('"',"").strip()
+    symbols = alphaVantageController.readSymbolsFromMultipleFiles(files,clean_function,startline = 1)
 
     company_dataframe = stockTrainingModelController.createDataSetFromFile(files[0])
 
